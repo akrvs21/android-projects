@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Number Guessing Game</string>
+    <string name="game_desc">Please select a number of digits. The number of digits that
+        I keep in my memory and the number of digits you choose will be the same.
+        Also, don\'t forget that you have 10 chances.</string>
+</resources>
