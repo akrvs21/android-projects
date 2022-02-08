@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Flag-Quiz/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2595" />
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Flag-Quiz/app/src/main/res/drawable/ic_baseline_navigate_next_24.xml" value="0.2595" />
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Flag-Quiz/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2595" />
         <entry key="..\:/LEARNING/AndroidDev/android-projects/Flag-Quiz/app/src/main/res/layout/activity_game.xml" value="0.264" />
         <entry key="..\:/LEARNING/AndroidDev/android-projects/Flag-Quiz/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/LEARNING/AndroidDev/android-projects/Flag-Quiz/app/src/main/res/layout/activity_result.xml" value="0.4" />
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Flag-Quiz/app/src/main/res/layout/activity_result.xml" value="0.264" />
       </map>
     </option>
   </component>

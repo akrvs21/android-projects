@@ -4,73 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#5B89DA"
     tools:context=".ResultActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/TotalCorrect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="Total Correct Answer: 7"
+        android:textColor="#57EC1A"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/TotalWrong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#E11E0E"
         android:layout_marginTop="26dp"
-        android:text="Total Wrong Answer: 2"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/TotalCorrect" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/successRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:text="Total Empty Answer: 1"
+        android:layout_marginTop="28dp"
+        android:textColor="#070708"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:text="Success Rate: 70%"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/TotalWrong" />
 
     <android.widget.Button
-        android:id="@+id/button"
+        android:id="@+id/btnPlay"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textFontWeight="999"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="28dp"
         android:background="#67DD6B"
         android:text="play again"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintTop_toBottomOf="@+id/successRate" />
 
     <android.widget.Button
-        android:id="@+id/button2"
+        android:id="@+id/btnQuit"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="#B81515"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textFontWeight="999"
         android:text="quit game"
-        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/btnPlay"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="@+id/btnPlay"
+        app:layout_constraintTop_toBottomOf="@+id/btnPlay" />
 </androidx.constraintlayout.widget.ConstraintLayout>
