@@ -46,7 +46,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // along with their data types.
 //        db.execSQL("delete from " + TABLE_NAME1);
 //        db.execSQL("delete from " + TABLE_NAME2);
-
+            Log.d("onCreate", "Called");
         String query1 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME1 + " ("
                 + ID_COL + " INTEGER, "
                 + NAME_COL1 + " TEXT)";
@@ -60,6 +60,10 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query1);
         db.execSQL(query2);
     }
+
+//    public void clearTheDb() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//    }
 
     public void insertData(int id, String catname, String tableName) {
 
@@ -108,7 +112,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // on below line we are creating a new array list.
         List<String> titlesList = new ArrayList<>();
         // on below line we are creating a cursor with query to read data from database.
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME1, null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME1 + " ORDER BY catid ASC", null);
         while(c.moveToNext()) {
             titlesList.add(c.getString(c.getColumnIndex("catname")));
 //            titlesList.add(c.getString(c.getColumnIndex("catid")));
@@ -144,9 +148,9 @@ public class DBHandler extends SQLiteOpenHelper {
             if(idcat != idserv) {
                 cat.moveToNext();
                 idcat = cat.getInt(cat.getColumnIndex("catid"));
-                category = cat.getString(cat.getColumnIndex("catname"));
                 listDetail.put(category , new ArrayList(serviceList));
                 serviceList.clear();
+                category = cat.getString(cat.getColumnIndex("catname"));
                 serviceList.add(serv.getString(serv.getColumnIndex("servicename")));
                 continue;
             }

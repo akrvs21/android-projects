@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        boolean isDelete =  getApplicationContext().deleteDatabase("allservices");
+        Log.d("del", String.valueOf(isDelete));
         dbHandler = new DBHandler(MainActivity.this);
 
         String str = LoaderHelper.parseFileToString(this, "response.json");
@@ -68,56 +70,56 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("json", String.valueOf(services));
+        Log.d("main", String.valueOf(services));
 
-//        // Iterate through cats array and call a function to add to DB
-//        for(int i = 0; i < cats.length(); i++) {
-//            try {
-//                JSONObject singleObject = cats.getJSONObject(i);
-//                dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("catname"), "category" );
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        Log.d("length", String.valueOf(cats.length()));
-//        // Iterate through services array and call a function to add to DB
-//        for(int i = 0; i < (services != null ? services.length() : 0); i++) {
-//            try {
-//                JSONObject singleObject = services.getJSONObject(i);
-//                dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("servicename"), "services");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        expandableListView = findViewById(R.id.expendableList);
-////        listDetail = ExpandableListData.getChildList();
-////        listTitles = new ArrayList<>(listDetail.keySet());
-//        listTitles = dbHandler.readTitles();
-//        listDetails = dbHandler.readListDetail();
-//        Log.d("titles", String.valueOf(listTitles));
-//        Log.d("titles", String.valueOf(listDetails));
-//        expandableListAdapter = new CustomExpandableListAdapter(this, listTitles, listDetails);
-//        expandableListView.setAdapter(expandableListAdapter);
-//
-//        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//            @Override
-//            public void onGroupExpand(int i) {
-////                Toast.makeText(getApplicationContext(), listTitles.get(i) + " List Expanded.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-//            @Override
-//            public void onGroupCollapse(int i) {
-////                Toast.makeText(getApplicationContext(), listTitles.get(i) + "List Collapsed.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-//            @Override
-//            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-////                Toast.makeText(getApplicationContext(), listTitles.get(i) + " -> " + listDetail.get(listTitles.get(i)).get(i1), Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
+        // Iterate through cats array and call a function to add to DB
+        for(int i = 0; i < cats.length(); i++) {
+            try {
+                JSONObject singleObject = cats.getJSONObject(i);
+                dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("catname"), "category" );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d("length", String.valueOf(cats.length()));
+        // Iterate through services array and call a function to add to DB
+        for(int i = 0; i < (services != null ? services.length() : 0); i++) {
+            try {
+                JSONObject singleObject = services.getJSONObject(i);
+                dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("servicename"), "services");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        expandableListView = findViewById(R.id.expendableList);
+
+        listTitles = dbHandler.readTitles();
+        listDetails = dbHandler.readListDetail();
+
+        Log.d("titles", String.valueOf(listTitles));
+        Log.d("titles", String.valueOf(listDetails));
+        expandableListAdapter = new CustomExpandableListAdapter(this, listTitles, listDetails);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int i) {
+//                Toast.makeText(getApplicationContext(), listTitles.get(i) + " List Expanded.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int i) {
+//                Toast.makeText(getApplicationContext(), listTitles.get(i) + "List Collapsed.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+//                Toast.makeText(getApplicationContext(), listTitles.get(i) + " -> " + listDetail.get(listTitles.get(i)).get(i1), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -126,64 +128,64 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.load_data:
-                Toast.makeText(getApplicationContext(), "Data is loading", Toast.LENGTH_SHORT).show();
-                // Iterate through cats array and call a function to add to DB
-                for(int i = 0; i < cats.length(); i++) {
-                    try {
-                        JSONObject singleObject = cats.getJSONObject(i);
-                        dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("catname"), "category" );
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("length", String.valueOf(cats.length()));
-                // Iterate through services array and call a function to add to DB
-                for(int i = 0; i < (services != null ? services.length() : 0); i++) {
-                    try {
-                        JSONObject singleObject = services.getJSONObject(i);
-                        dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("servicename"), "services");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                expandableListView = findViewById(R.id.expendableList);
-//        listDetail = ExpandableListData.getChildList();
-//        listTitles = new ArrayList<>(listDetail.keySet());
-                listTitles = dbHandler.readTitles();
-                listDetails = dbHandler.readListDetail();
-                Log.d("titles", String.valueOf(listTitles));
-                Log.d("titles", String.valueOf(listDetails));
-                expandableListAdapter = new CustomExpandableListAdapter(this, listTitles, listDetails);
-                expandableListView.setAdapter(expandableListAdapter);
-
-                expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-                    @Override
-                    public void onGroupExpand(int i) {
-//                Toast.makeText(getApplicationContext(), listTitles.get(i) + " List Expanded.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-                    @Override
-                    public void onGroupCollapse(int i) {
-//                Toast.makeText(getApplicationContext(), listTitles.get(i) + "List Collapsed.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                    @Override
-                    public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-//                Toast.makeText(getApplicationContext(), listTitles.get(i) + " -> " + listDetail.get(listTitles.get(i)).get(i1), Toast.LENGTH_SHORT).show();
-                        return false;
-                    }
-                });
-            break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + item.getItemId());
-        }
-        return true;
-    }
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.load_data:
+//                Toast.makeText(getApplicationContext(), "Data is loading", Toast.LENGTH_SHORT).show();
+//                // Iterate through cats array and call a function to add to DB
+//                for(int i = 0; i < cats.length(); i++) {
+//                    try {
+//                        JSONObject singleObject = cats.getJSONObject(i);
+//                        dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("catname"), "category" );
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                Log.d("length", String.valueOf(cats.length()));
+//                // Iterate through services array and call a function to add to DB
+//                for(int i = 0; i < (services != null ? services.length() : 0); i++) {
+//                    try {
+//                        JSONObject singleObject = services.getJSONObject(i);
+//                        dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("servicename"), "services");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                expandableListView = findViewById(R.id.expendableList);
+////        listDetail = ExpandableListData.getChildList();
+////        listTitles = new ArrayList<>(listDetail.keySet());
+//                listTitles = dbHandler.readTitles();
+//                listDetails = dbHandler.readListDetail();
+//                Log.d("titles", String.valueOf(listTitles));
+//                Log.d("titles", String.valueOf(listDetails));
+//                expandableListAdapter = new CustomExpandableListAdapter(this, listTitles, listDetails);
+//                expandableListView.setAdapter(expandableListAdapter);
+//
+//                expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//                    @Override
+//                    public void onGroupExpand(int i) {
+////                Toast.makeText(getApplicationContext(), listTitles.get(i) + " List Expanded.", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//                    @Override
+//                    public void onGroupCollapse(int i) {
+////                Toast.makeText(getApplicationContext(), listTitles.get(i) + "List Collapsed.", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//                    @Override
+//                    public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+////                Toast.makeText(getApplicationContext(), listTitles.get(i) + " -> " + listDetail.get(listTitles.get(i)).get(i1), Toast.LENGTH_SHORT).show();
+//                        return false;
+//                    }
+//                });
+//            break;
+//            default:
+//                throw new IllegalStateException("Unexpected value: " + item.getItemId());
+//        }
+//        return true;
+//    }
 }
