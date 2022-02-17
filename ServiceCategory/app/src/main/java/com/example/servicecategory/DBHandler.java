@@ -31,6 +31,8 @@ public class DBHandler extends SQLiteOpenHelper {
     // below variable is for our name column
     private static final String NAME_COL1 = "catname";
     private static final String NAME_COL2 = "servicename";
+    private static final String NAME_COL3 = "paymin";
+    private static final String NAME_COL4 = "paymax";
 
     // creating a constructor for our database handler.
     public DBHandler(Context context) {
@@ -53,7 +55,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String query2 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME2 + " ("
                 + ID_COL + " INTEGER, "
-                + NAME_COL2 + " TEXT)";
+                + NAME_COL2 + " TEXT, "
+                + NAME_COL3 + " TEXT, "
+                + NAME_COL4 + " TEXT)";
 
         // at last we are calling a exec sql
         // method to execute above sql query
@@ -65,7 +69,7 @@ public class DBHandler extends SQLiteOpenHelper {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //    }
 
-    public void insertData(int id, String catname, String tableName) {
+    public void insertData(int id, String catname, String paymin, String paymax, String tableName) {
 
         // on below line we are creating a variable for
         // our sqlite database and calling writable method
@@ -87,6 +91,8 @@ public class DBHandler extends SQLiteOpenHelper {
         } else if (tableName.equals(TABLE_NAME2)) {
             values.put(ID_COL, id);
             values.put(NAME_COL2, catname);
+            values.put(NAME_COL3, paymin);
+            values.put(NAME_COL4, paymax);
         }
 
         // after adding all values we are passing
@@ -103,7 +109,21 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    // we have created a new method for reading all the courses.
+    @SuppressLint("Range")
+    public  List<String> readPaymentInfo(String servname) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<String> minmaxpay = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME2 + " WHERE servicename='" + servname + "'", null);
+        while(cursor.moveToNext()) {
+            minmaxpay.add(cursor.getString(cursor.getColumnIndex("paymin")));
+            minmaxpay.add(cursor.getString(cursor.getColumnIndex("paymax")));
+        }
+        cursor.close();
+        return  minmaxpay;
+    }
+
+    // we have created a new method for reading all the titles.
     @SuppressLint("Range")
     public List<String> readTitles() {
         // on below line we are creating a

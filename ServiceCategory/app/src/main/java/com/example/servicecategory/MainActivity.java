@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     List<String> listTitles;
+    List<String> listPaymentInfo;
     HashMap<String, List<String>> listDetail;
     HashMap<String, List<String>>listDetails;
     JSONArray cats = null;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         dbHandler = new DBHandler(MainActivity.this);
 
         String str = LoaderHelper.parseFileToString(this, "response.json");
-        Log.d("json", str);
+//        Log.d("jsonstring", str);
 
         JSONObject jsonObj = null;
         try {
@@ -53,30 +55,27 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        // Getting JSONArray from the JSONObject
+        Log.d("jsonstring", String.valueOf(jsonObj));
+        // Getting JSONArray category from the JSONObject
         try {
             cats = jsonObj.getJSONArray("cats");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        // Getting JSONArray from the JSONObject
+        // Getting JSONArray services from the JSONObject
         try {
             services = jsonObj.getJSONArray("services");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        try {
-            Log.d("json", String.valueOf(cats.getJSONObject(1)));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
         Log.d("main", String.valueOf(services));
 
         // Iterate through cats array and call a function to add to DB
         for(int i = 0; i < cats.length(); i++) {
             try {
                 JSONObject singleObject = cats.getJSONObject(i);
-                dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("catname"), "category" );
+                dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("catname"), singleObject.getString("catnameTJ"), singleObject.getString("catnameEN"), "category" );
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < (services != null ? services.length() : 0); i++) {
             try {
                 JSONObject singleObject = services.getJSONObject(i);
-                dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("servicename"), "services");
+                dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("servicename"), singleObject.getString("paymin"), singleObject.getString("paymax"), "services");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -115,8 +114,21 @@ public class MainActivity extends AppCompatActivity {
         });
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-//                Toast.makeText(getApplicationContext(), listTitles.get(i) + " -> " + listDetail.get(listTitles.get(i)).get(i1), Toast.LENGTH_SHORT).show();
+            public boolean onChildClick(ExpandableListView listview, View view,
+                                        int groupPos, int childPos, long id) {
+                String str = listDetails.get(listTitles.get(groupPos)).get(childPos);
+                Log.d("localstr", str);
+                listPaymentInfo = dbHandler.readPaymentInfo(str);
+                Log.d("localstr", String.valueOf(listPaymentInfo));
+
+                Intent intent = new Intent(MainActivity.this, ServiceInfoActivity.class);
+                intent.putExtra("title", str);
+                intent.putExtra("paymin", listPaymentInfo.get(0));
+                intent.putExtra("paymax", listPaymentInfo.get(1));
+
+
+                startActivity(intent);
+
                 return false;
             }
         });
@@ -127,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.app_bar_menu, menu);
         return true;
     }
+
 
 //    @SuppressLint("NonConstantResourceId")
 //    @Override
