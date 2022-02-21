@@ -1,10 +1,12 @@
 package com.example.servicecategory;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     JSONArray cats = null;
     JSONArray services = null;
     private DBHandler dbHandler;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isDelete =  getApplicationContext().deleteDatabase("allservices");
         Log.d("del", String.valueOf(isDelete));
         dbHandler = new DBHandler(MainActivity.this);
+        progressBar = findViewById(R.id.progressBar);
 
         String str = LoaderHelper.parseFileToString(this, "response.json");
 //        Log.d("jsonstring", str);
@@ -116,18 +121,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView listview, View view,
                                         int groupPos, int childPos, long id) {
-                String str = listDetails.get(listTitles.get(groupPos)).get(childPos);
-                Log.d("localstr", str);
-                listPaymentInfo = dbHandler.readPaymentInfo(str);
-                Log.d("localstr", String.valueOf(listPaymentInfo));
+                List<Integer> indexes = new ArrayList<>();
+                indexes.add(groupPos);
+                indexes.add(childPos);
 
-                Intent intent = new Intent(MainActivity.this, ServiceInfoActivity.class);
-                intent.putExtra("title", str);
-                intent.putExtra("paymin", listPaymentInfo.get(0));
-                intent.putExtra("paymax", listPaymentInfo.get(1));
-
-
-                startActivity(intent);
+                CustomAsyncTask customAsyncTask = new CustomAsyncTask();
+                customAsyncTask.execute(indexes);
 
                 return false;
             }
@@ -140,65 +139,47 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private class CustomAsyncTask extends AsyncTask<List, Void, List> {
 
-//    @SuppressLint("NonConstantResourceId")
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.load_data:
-//                Toast.makeText(getApplicationContext(), "Data is loading", Toast.LENGTH_SHORT).show();
-//                // Iterate through cats array and call a function to add to DB
-//                for(int i = 0; i < cats.length(); i++) {
-//                    try {
-//                        JSONObject singleObject = cats.getJSONObject(i);
-//                        dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("catname"), "category" );
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                Log.d("length", String.valueOf(cats.length()));
-//                // Iterate through services array and call a function to add to DB
-//                for(int i = 0; i < (services != null ? services.length() : 0); i++) {
-//                    try {
-//                        JSONObject singleObject = services.getJSONObject(i);
-//                        dbHandler.insertData(singleObject.getInt("catid"), singleObject.getString("servicename"), "services");
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                expandableListView = findViewById(R.id.expendableList);
-////        listDetail = ExpandableListData.getChildList();
-////        listTitles = new ArrayList<>(listDetail.keySet());
-//                listTitles = dbHandler.readTitles();
-//                listDetails = dbHandler.readListDetail();
-//                Log.d("titles", String.valueOf(listTitles));
-//                Log.d("titles", String.valueOf(listDetails));
-//                expandableListAdapter = new CustomExpandableListAdapter(this, listTitles, listDetails);
-//                expandableListView.setAdapter(expandableListAdapter);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected List doInBackground(List... lists) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int groupPos = (int) lists[0].get(0);
+            int childPos = (int) lists[0].get(1);
+            Log.d("tagg", String.valueOf(groupPos));
+            Log.d("tagg", String.valueOf(childPos));
+            String str = listDetails.get(listTitles.get(groupPos)).get(childPos);
+
+            Log.d("localstr", str);
+            listPaymentInfo = dbHandler.readPaymentInfo(str);
+            listPaymentInfo.add(str);
+            Log.d("localstr", String.valueOf(listPaymentInfo));
+
+            return listPaymentInfo;
+        }
+
+        @Override
+        protected void onPostExecute(List listPaymentInfo) {
+            super.onPostExecute(listPaymentInfo);
+
+            Intent intent = new Intent(MainActivity.this, ServiceInfoActivity.class);
+            intent.putExtra("title", (String) listPaymentInfo.get(2));
+            intent.putExtra("paymin", (String) listPaymentInfo.get(0));
+            intent.putExtra("paymax", (String) listPaymentInfo.get(1));
 //
-//                expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//                    @Override
-//                    public void onGroupExpand(int i) {
-////                Toast.makeText(getApplicationContext(), listTitles.get(i) + " List Expanded.", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-//                    @Override
-//                    public void onGroupCollapse(int i) {
-////                Toast.makeText(getApplicationContext(), listTitles.get(i) + "List Collapsed.", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-//                    @Override
-//                    public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-////                Toast.makeText(getApplicationContext(), listTitles.get(i) + " -> " + listDetail.get(listTitles.get(i)).get(i1), Toast.LENGTH_SHORT).show();
-//                        return false;
-//                    }
-//                });
-//            break;
-//            default:
-//                throw new IllegalStateException("Unexpected value: " + item.getItemId());
-//        }
-//        return true;
-//    }
+            startActivity(intent);
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 }

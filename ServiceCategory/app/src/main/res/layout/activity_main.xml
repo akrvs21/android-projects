@@ -7,12 +7,22 @@
 
     <ExpandableListView
         android:id="@+id/expendableList"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:dividerHeight="2dp"
-        android:divider="@android:color/background_dark"
+        android:layout_height="match_parent"
         android:childDivider="#B0B0B0"
-        android:listSelector="#D2DEDD"
-        />
+        android:divider="@android:color/background_dark"
+        android:dividerHeight="2dp"
+        android:listSelector="#D2DEDD">
 
+    </ExpandableListView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="230dp"
+        android:visibility="invisible"
+        />
 </RelativeLayout>
