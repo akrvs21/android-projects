@@ -3,14 +3,20 @@ package com.example.photoalbum;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -21,16 +27,17 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class AddImageActivity extends AppCompatActivity {
-    private ImageView imageViewAddImage;
-    private EditText editTextDesc, editTextAddTitle;
+    private ImageView addImageView;
+    private EditText titleView;
+    private EditText descriptionView;
     private Button btnSave;
-    int SELECT_PICTURE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,82 +45,92 @@ public class AddImageActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add Image");
         setContentView(R.layout.activity_add_image);
 
-        imageViewAddImage = (ImageView)  findViewById(R.id.imageViewUpdateImage);
-        editTextDesc = findViewById(R.id.updateDescription);
-        editTextAddTitle = findViewById(R.id.updateTitle);
-        btnSave = findViewById(R.id.btnUpdate);
+        addImageView = findViewById(R.id.addImageView);
+        titleView = findViewById(R.id.addTitle);
+        descriptionView = findViewById(R.id.addDescription);
+        btnSave = findViewById(R.id.btnSave);
 
-        imageViewAddImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectImage(AddImageActivity.this);
+        //TODO ask for permission of camera upon first launch of application
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED){
+                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permission, 112);
             }
-        });
+        }
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        //TODO captue image using camera
+        addImageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }
-    private void selectImage(Context context) {
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Choose your profile picture");
-
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-
-                if (options[item].equals("Take Photo")) {
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
-
-                } else if (options[item].equals("Choose from Gallery")) {
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto , 1);
-
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
+            public boolean onLongClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED){
+                        String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permission, 112);
+                    }
+                    else {
+                        openCamera();
+                    }
                 }
+                else {
+                    openCamera();
+                }
+                return false;
             }
         });
-        builder.show();
+
+        //TODO chose image from gallery
+        addImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+            }
+        });
     }
+
+    Uri image_uri;
+    private static final int RESULT_LOAD_IMAGE = 123;
+    public static final int IMAGE_CAPTURE_CODE = 654;
+
+    //TODO opens camera so that user can capture image
+    private void openCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case 0:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        imageViewAddImage.setImageBitmap(selectedImage);
-                    }
-
-                    break;
-                case 1:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getContentResolver().query(selectedImage,
-                                    filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                imageViewAddImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                cursor.close();
-                            }
-                        }
-                    }
-                    break;
-            }
+        if(requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
+            Bitmap bitmap = uriToBitmap(image_uri);
+            addImageView.setImageBitmap(bitmap);
+        } else if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+            image_uri = data.getData();
+            Bitmap bitmap = uriToBitmap(image_uri);
+            addImageView.setImageBitmap(bitmap);
         }
+    }
+
+    //TODO takes URI of the image and returns bitmap
+    private Bitmap uriToBitmap(Uri selectedFileUri) {
+        try {
+            ParcelFileDescriptor parcelFileDescriptor =
+                    getContentResolver().openFileDescriptor(selectedFileUri, "r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+
+            parcelFileDescriptor.close();
+            return image;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  null;
     }
 }

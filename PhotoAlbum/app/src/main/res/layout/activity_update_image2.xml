@@ -15,7 +15,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/select" />
+        app:srcCompat="@drawable/select"
+        android:contentDescription="@string/add_image" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,9 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:ems="10"
-            android:hint="Add title"
+            android:hint="@string/update_title"
             android:inputType="textPersonName"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:autofillHints="dsgr" />
 
         <EditText
             android:id="@+id/updateDescription"
@@ -45,10 +47,9 @@
             android:layout_height="150dp"
             android:layout_margin="10dp"
             android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Add description"
+            android:hint="@string/update_description"
             android:inputType="textMultiLine"
             app:layout_constraintStart_toStartOf="parent" />
 

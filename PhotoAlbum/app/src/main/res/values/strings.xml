@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Photo Album</string>
+    <string name="add_title">Add image title</string>
+    <string name="add_description">Add image description</string>
+    <string name="update_title">Update image title</string>
+    <string name="update_description">Update image description</string>
+    <string name="save">Save</string>
+    <string name="add_image_floating_btn">Add image floating btn</string>
+    <string name="add_image">Add image</string>
 </resources>

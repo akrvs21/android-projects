@@ -7,7 +7,7 @@
     tools:context=".AddImageActivity">
 
     <ImageView
-        android:id="@+id/imageViewUpdateImage"
+        android:id="@+id/addImageView"
         android:layout_width="158dp"
         android:layout_height="161dp"
         android:layout_marginTop="88dp"
@@ -15,7 +15,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/select" />
+        app:srcCompat="@drawable/select"
+        android:contentDescription="@string/add_image" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,37 +28,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewUpdateImage">
+        app:layout_constraintTop_toBottomOf="@+id/addImageView">
 
         <EditText
-            android:id="@+id/updateTitle"
+            android:id="@+id/addTitle"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:ems="10"
-            android:hint="Add title"
+            android:hint="@string/add_title"
             android:inputType="textPersonName"
             android:textColor="#000000" />
 
         <EditText
-            android:id="@+id/updateDescription"
+            android:id="@+id/addDescription"
             android:layout_width="300dp"
             android:layout_height="150dp"
             android:layout_margin="10dp"
             android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Add description"
+            android:hint="@string/add_description"
             android:inputType="textMultiLine"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnSave"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Save"
+            android:text="@string/save"
             android:textSize="24sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
