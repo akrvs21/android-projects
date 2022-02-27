@@ -38,6 +38,7 @@ public class AddImageActivity extends AppCompatActivity {
     private EditText titleView;
     private EditText descriptionView;
     private Button btnSave;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,14 @@ public class AddImageActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
             }
         });
+
+        //TODO send image to server
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
     }
 
     Uri image_uri;
@@ -109,11 +118,11 @@ public class AddImageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
-            Bitmap bitmap = uriToBitmap(image_uri);
+            bitmap = uriToBitmap(image_uri);
             addImageView.setImageBitmap(bitmap);
         } else if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             image_uri = data.getData();
-            Bitmap bitmap = uriToBitmap(image_uri);
+            bitmap = uriToBitmap(image_uri);
             addImageView.setImageBitmap(bitmap);
         }
     }
