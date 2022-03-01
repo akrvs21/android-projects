@@ -100,10 +100,11 @@ public class AddImageActivity extends AppCompatActivity {
                 imageInfo.setDescription(descriptionView.getText().toString());
                 imageInfo.setImage(bitmapToString(bitmap));
 
-                Log.d("myobj", String.valueOf(imageInfo));
+                Log.d("myobj", String.valueOf(imageInfo.getTitle()));
+                Log.d("myobj", String.valueOf(imageInfo.getDescription()));
+                Log.d("myobj", String.valueOf(imageInfo.getImage().getBytes().length));
             }
         });
-
     }
 
     Uri image_uri;
