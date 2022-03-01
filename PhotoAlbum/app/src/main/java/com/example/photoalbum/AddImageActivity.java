@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -89,14 +90,20 @@ public class AddImageActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
             }
         });
-
-        //TODO send image to server
+        //TODO send the data to server
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                // Store the data to a single object
+                ImageInfo imageInfo = new ImageInfo();
+                imageInfo.setTitle(titleView.getText().toString());
+                imageInfo.setDescription(descriptionView.getText().toString());
+                imageInfo.setImage(bitmapToString(bitmap));
+
+                Log.d("myobj", String.valueOf(imageInfo));
             }
         });
+
     }
 
     Uri image_uri;
@@ -141,5 +148,14 @@ public class AddImageActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return  null;
+    }
+
+    private String bitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        return encodedImage;
     }
 }

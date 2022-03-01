@@ -11,6 +11,10 @@ public class ImageInfo {
         this.image = image;
     }
 
+    public ImageInfo() {
+
+    }
+
     public String getTitle() {
         return title;
     }
