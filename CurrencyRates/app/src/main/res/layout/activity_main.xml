@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#202124"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#202124"
     tools:context=".MainActivity">
 
     <ImageView
@@ -13,37 +13,48 @@
         android:layout_height="87dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
+        android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/logo" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Сана:"
-        app:layout_constraintEnd_toStartOf="@+id/dateText"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/timeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="17dp"
-        android:text="Соат:"
-        app:layout_constraintEnd_toStartOf="@+id/time"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <TextView
         android:id="@+id/dateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="41dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="17dp"
+        android:text="Сана:"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/timeText"
+        app:layout_constraintEnd_toStartOf="@+id/date"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:text="Соат:"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/time"
+        app:layout_constraintTop_toBottomOf="@+id/dateText" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="40dp"
         android:text="22.03.2022"
+        android:textColor="#00ffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,9 +62,12 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="83dp"
-        android:text="Сана"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="89dp"
+        android:text="11:15"
+        android:textColor="#00ffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
 
@@ -61,11 +75,11 @@
         android:id="@+id/transferTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
         android:text="ҚУРБИ ИНТИҚОЛИ МАБЛАҒ"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -74,19 +88,20 @@
         android:id="@+id/exchangeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="89dp"
-        android:layout_marginEnd="82dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="50dp"
         android:text="ҚУРБИ МУБОДИЛАИ АСЪОР"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeText" />
+        app:layout_constraintStart_toEndOf="@+id/transferTitle"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,13 +115,13 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
 
-                <View
-                    android:layout_height="match_parent"/>
+                <View android:layout_height="match_parent" />
 
-                <View
-                    android:layout_height="match_parent"/>
+                <View android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/transferBuyText"
@@ -115,7 +130,8 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="BUY" />
+                    android:text="BUY"
+                    android:textColor="#FFFFFF" />
 
                 <TextView
                     android:id="@+id/transferSellText"
@@ -124,20 +140,24 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="SELL" />
+                    android:text="SELL"
+                    android:textColor="#FFFFFF" />
             </TableRow>
 
             <TableRow
-                android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#29292c">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:paddingLeft="15dp"
-                    android:adjustViewBounds="true"
                     android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:paddingLeft="15dp"
                     android:src="@mipmap/usa" />
 
                 <TextView
@@ -149,7 +169,7 @@
                     android:padding="20dp"
                     android:text="USD"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -159,7 +179,9 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="BUY" />
+                    android:text="BUY"
+                    android:textColor="#03a9f4"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/transferSellUsd"
@@ -168,19 +190,23 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="SELL" />
+                    android:text="SELL"
+                    android:textColor="#ffc107"
+                    android:textSize="22sp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:paddingLeft="15dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
+                    android:paddingLeft="15dp"
                     android:src="@mipmap/eur" />
 
                 <TextView
@@ -192,7 +218,7 @@
                     android:padding="20dp"
                     android:text="EUR"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -202,7 +228,9 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="BUY" />
+                    android:text="BUY"
+                    android:textColor="#03a9f4"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/transferSellEur"
@@ -211,19 +239,24 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="SELL" />
+                    android:text="SELL"
+                    android:textColor="#ffc107"
+                    android:textSize="22sp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#29292c">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:paddingLeft="15dp"
-                    android:adjustViewBounds="true"
                     android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:paddingLeft="15dp"
                     android:src="@mipmap/rus" />
 
                 <TextView
@@ -235,7 +268,7 @@
                     android:padding="20dp"
                     android:text="RUB"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -245,7 +278,9 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="BUY" />
+                    android:text="BUY"
+                    android:textColor="#03a9f4"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/transferSellRub"
@@ -254,7 +289,9 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="SELL" />
+                    android:text="SELL"
+                    android:textColor="#ffc107"
+                    android:textSize="22sp" />
             </TableRow>
 
         </TableLayout>
@@ -267,13 +304,13 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
 
-                <View
-                    android:layout_height="match_parent"/>
+                <View android:layout_height="match_parent" />
 
-                <View
-                    android:layout_height="match_parent"/>
+                <View android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/exchangeBuyText"
@@ -282,7 +319,8 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="BUY" />
+                    android:text="BUY"
+                    android:textColor="#FFFFFF" />
 
                 <TextView
                     android:id="@+id/exchangeSellText"
@@ -291,19 +329,23 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="SELL" />
+                    android:text="SELL"
+                    android:textColor="#FFFFFF" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#29292c">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:paddingLeft="15dp"
-                    android:adjustViewBounds="true"
                     android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:paddingLeft="15dp"
                     android:src="@mipmap/usa" />
 
                 <TextView
@@ -315,7 +357,7 @@
                     android:padding="20dp"
                     android:text="USD"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -325,7 +367,9 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="BUY" />
+                    android:text="BUY"
+                    android:textColor="#03a9f4"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/exchangeSellUsd"
@@ -334,19 +378,23 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="SELL" />
+                    android:text="SELL"
+                    android:textColor="#ffc107"
+                    android:textSize="22sp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:paddingLeft="15dp"
-                    android:adjustViewBounds="true"
                     android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:paddingLeft="15dp"
                     android:src="@mipmap/eur" />
 
                 <TextView
@@ -358,7 +406,7 @@
                     android:padding="20dp"
                     android:text="EUR"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -368,7 +416,9 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="BUY" />
+                    android:text="BUY"
+                    android:textColor="#03a9f4"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/exchangeSellEur"
@@ -377,19 +427,24 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="SELL" />
+                    android:text="SELL"
+                    android:textColor="#ffc107"
+                    android:textSize="22sp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#29292c">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:paddingLeft="15dp"
-                    android:adjustViewBounds="true"
                     android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:paddingLeft="15dp"
                     android:src="@mipmap/rus" />
 
                 <TextView
@@ -401,7 +456,7 @@
                     android:padding="20dp"
                     android:text="RUB"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -411,7 +466,9 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="BUY" />
+                    android:text="BUY"
+                    android:textColor="#03a9f4"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/exchangeSellRub"
@@ -420,10 +477,27 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="SELL" />
+                    android:text="SELL"
+                    android:textColor="#ffc107"
+                    android:textSize="22sp" />
             </TableRow>
 
         </TableLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/companyInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="439dp"
+        android:layout_marginEnd="425dp"
+        android:text="ООО МДО «Пайванд Групп»"
+        android:textColor="#7C7979"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,14 @@
 package com.example.currencyrates;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 import android.window.SplashScreen;
@@ -21,6 +25,15 @@ import org.json.JSONObject;
 
 import java.io.DataInput;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,17 +48,25 @@ public class MainActivity extends FragmentActivity {
     private TextView exchangeTitle, exchangeBuyText, exchangeSellText, exchangeBuyUsd, exchangeSellUsd, exchangeBuyEur, exchangeSellEur, exchangeBuyRub, exchangeSellRub;
     // Header
     private TextView dateText, date, timeText, time;
+    // Footer
+    private TextView companyInfo;
+    // Create the Handler
+    private Handler handler = new Handler();
 
     JSONObject jsonObject = null;
     JSONObject transferObjBuy = null;
     JSONObject transferObjSell = null;
     JSONObject exchangeObjBuy = null;
     JSONObject exchangeObjSell = null;
+    JSONObject stringObject = null;
 
     TransferBuy transferBuy = null;
     TransferSell transferSell = null;
     ExchangeBuy exchangeBuy = null;
     ExchangeSell exchangeSell = null;
+    Strings titles = null;
+
+    private String [] endpoints = new String[] {"https://payvand.tj/api/update-rates?locale=en", "https://payvand.tj/api/update-rates?locale=ru", "https://payvand.tj/api/update-rates?locale=tj"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +93,44 @@ public class MainActivity extends FragmentActivity {
         exchangeBuyRub = findViewById(R.id.exchangeBuyRub);
         exchangeSellRub = findViewById(R.id.exchangeSellRub);
 
+        dateText = findViewById(R.id.dateText);
+        date = findViewById(R.id.date);
+        timeText = findViewById(R.id.timeText);
+        time = findViewById(R.id.time);
+        companyInfo = findViewById(R.id.companyInfo);
 
+        // Start the Runnable immediately
+        handler.post(runnable);
+
+//        getFreshRates(endpoints[1]);
+        Log.d("forloop", "test1");
+        Log.d("forloop", String.valueOf(i));
+//        while(true) {
+//            Log.d("forloop", "test2");
+//            for (int i = 0; i < endpoints.length; i++) {
+//                getFreshRates(endpoints[i]);
+//                Log.d("forloop", String.valueOf(i));
+//                try {
+//                    TimeUnit.SECONDS.sleep(30);
+//                } catch (InterruptedException ie) {
+//                    Thread.currentThread().interrupt();
+//                }
+//                if(i == 2) {
+//                    i = -1;
+//                }
+//            }
+//        }
+    }
+
+    public void getFreshRates (String url) {
         OkHttpClient client = new OkHttpClient();
-        String url = "https://payvand.tj/api/update-rates?locale=en";
+//        String url = "https://payvand.tj/api/update-rates?locale=en";
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+        Date currDate = new Date();
+        Date currTime = new Date();
+        Log.d("today", dateFormatter.format(currDate));
+        Log.d("today", timeFormatter.format(currTime));
 
         Request request = new Request.Builder()
                 .url(url)
@@ -104,11 +160,11 @@ public class MainActivity extends FragmentActivity {
                         // Getting "buy" and "sell" JSONObjects
                         transferObjBuy = jsonObject.getJSONObject("rates").getJSONObject("transfer").getJSONObject("buy");
                         transferObjSell = jsonObject.getJSONObject("rates").getJSONObject("transfer").getJSONObject("sell");
+                        stringObject = jsonObject.getJSONObject("strings");
                         // Map JSON data to POJO fields
                         transferBuy = mapper.readValue(transferObjBuy.toString(), TransferBuy.class);
                         transferSell = mapper.readValue(transferObjSell.toString(), TransferSell.class);
-
-
+                        titles = mapper.readValue(stringObject.toString(), Strings.class);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -129,28 +185,58 @@ public class MainActivity extends FragmentActivity {
                     }
 
                     MainActivity.this.runOnUiThread(new Runnable() {
+                        @SuppressLint({"DefaultLocale", "SetTextI18n"})
                         @Override
                         public void run() {
                             Log.d("logd", myResponse);
                             // Setting values for Transfer table
-                            transferBuyUsd.setText(String.valueOf(transferBuy.getUsd()));
-                            transferBuyEur.setText(String.valueOf(transferBuy.getEur()));
-                            transferBuyRub.setText(String.valueOf(transferBuy.getRur()));
-                            transferSellUsd.setText(String.valueOf(transferSell.getUsd()));
-                            transferSellEur.setText(String.valueOf(transferSell.getEur()));
-                            transferSellRub.setText(String.valueOf(transferSell.getRur()));
+                            transferBuyUsd.setText(String.format("%.4f", transferBuy.getUsd()));
+                            transferBuyEur.setText(String.format("%.4f", transferBuy.getEur()));
+                            transferBuyRub.setText(String.format("%.4f", transferBuy.getRur()));
+                            transferSellUsd.setText(String.format("%.4f", transferSell.getUsd()));
+                            transferSellEur.setText(String.format("%.4f", transferSell.getEur()));
+                            transferSellRub.setText(String.format("%.4f", transferSell.getRur()));
 
                             // Setting values for Exchange table
-                            exchangeBuyUsd.setText(String.valueOf(exchangeBuy.getUsd()));
-                            exchangeBuyEur.setText(String.valueOf(exchangeBuy.getEur()));
-                            exchangeBuyRub.setText(String.valueOf(exchangeBuy.getRur()));
-                            exchangeSellUsd.setText(String.valueOf(exchangeSell.getUsd()));
-                            exchangeSellEur.setText(String.valueOf(exchangeSell.getEur()));
-                            exchangeSellRub.setText(String.valueOf(exchangeSell.getRur()));
+                            exchangeBuyUsd.setText(String.format("%.4f", exchangeBuy.getUsd()));
+                            exchangeBuyEur.setText(String.format("%.4f", exchangeBuy.getEur()));
+                            exchangeBuyRub.setText(String.format("%.4f", exchangeBuy.getRur()));
+                            exchangeSellUsd.setText(String.format("%.4f", exchangeSell.getUsd()));
+                            exchangeSellEur.setText(String.format("%.4f", exchangeSell.getEur()));
+                            exchangeSellRub.setText(String.format("%.4f", exchangeSell.getRur()));
+
+                            // Setting titles
+                            transferTitle.setText(titles.getTitle_transfer());
+                            transferBuyText.setText(titles.getBuy());
+                            transferSellText.setText(titles.getSell());
+                            exchangeTitle.setText(titles.getTitle_exchange());
+                            exchangeBuyText.setText(titles.getBuy());
+                            exchangeSellText.setText(titles.getSell());
+                            dateText.setText(titles.getDate() + ":");
+                            timeText.setText(titles.getTime() + ":");
+                            companyInfo.setText(titles.getCompany_info());
+                            date.setText(dateFormatter.format(currDate));
+                            time.setText(timeFormatter.format(currTime));
                         }
                     });
                 }
             }
         });
     }
+    static int i = 0;
+    // Define the code block to be executed
+    private Runnable runnable = new Runnable() {
+
+        @Override
+        public void run() {
+            Log.d("statici", String.valueOf(i));
+            getFreshRates(endpoints[i]);
+                i++;
+                if(i == 3) {
+                    i = 0;
+                }
+            // Repeat every 2 seconds
+            handler.postDelayed(runnable, 30000);
+        }
+    };
 }
