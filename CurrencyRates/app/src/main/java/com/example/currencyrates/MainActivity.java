@@ -3,6 +3,7 @@ package com.example.currencyrates;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
@@ -10,6 +11,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.window.SplashScreen;
 import android.window.SplashScreenView;
@@ -48,10 +53,13 @@ public class MainActivity extends FragmentActivity {
     private TextView exchangeTitle, exchangeBuyText, exchangeSellText, exchangeBuyUsd, exchangeSellUsd, exchangeBuyEur, exchangeSellEur, exchangeBuyRub, exchangeSellRub;
     // Header
     private TextView dateText, date, timeText, time;
+    private ImageView logo, shine;
+    private ConstraintLayout constraintLayout;
     // Footer
     private TextView companyInfo;
     // Create the Handler
     private Handler handler = new Handler();
+
 
     JSONObject jsonObject = null;
     JSONObject transferObjBuy = null;
@@ -98,6 +106,9 @@ public class MainActivity extends FragmentActivity {
         timeText = findViewById(R.id.timeText);
         time = findViewById(R.id.time);
         companyInfo = findViewById(R.id.companyInfo);
+        logo = findViewById(R.id.imageView);
+        shine = findViewById(R.id.shine);
+        constraintLayout = findViewById(R.id.rootLayout);
 
         // Start the Runnable immediately
         handler.post(runnable);
@@ -188,6 +199,7 @@ public class MainActivity extends FragmentActivity {
                         @SuppressLint({"DefaultLocale", "SetTextI18n"})
                         @Override
                         public void run() {
+                            startShineAnim();
                             Log.d("logd", myResponse);
                             // Setting values for Transfer table
                             transferBuyUsd.setText(String.format("%.4f", transferBuy.getUsd()));
@@ -239,4 +251,14 @@ public class MainActivity extends FragmentActivity {
             handler.postDelayed(runnable, 30000);
         }
     };
+
+    private void startShineAnim() {
+        Animation animation = new TranslateAnimation(
+                0, constraintLayout.getWidth() + shine.getWidth(), 0, 0
+        );
+        animation.setDuration(550);
+        animation.setFillAfter(true);
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        shine.startAnimation(animation);
+    }
 }
