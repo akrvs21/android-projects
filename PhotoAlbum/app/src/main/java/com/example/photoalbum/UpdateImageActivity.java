@@ -147,5 +147,4 @@ public class UpdateImageActivity extends AppCompatActivity {
 
         return encodedImage;
     }
-
 }
