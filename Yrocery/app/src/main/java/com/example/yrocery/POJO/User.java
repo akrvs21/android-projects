@@ -1,4 +1,4 @@
-package com.example.yrocery;
+package com.example.yrocery.POJO;
 
 public class User {
     private String Name;
