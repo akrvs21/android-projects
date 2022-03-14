@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity {
                             } else {
                                 Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
                             }
-                         } else {
+                        } else {
                             Toast.makeText(Login.this, "The user doesn't exist", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }

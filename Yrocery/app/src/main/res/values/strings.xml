@@ -12,6 +12,30 @@
         <item>Sign out</item>
     </string-array>
 
+    <string-array name="vegetables">
+        <item>Potato</item>
+        <item>Tomato</item>
+        <item>Carrot</item>
+        <item>Corn</item>
+        <item>Pumpkin</item>
+    </string-array>
+
+    <string-array name="fruits">
+        <item>Apple</item>
+        <item>Pineapple</item>
+        <item>Watermelon</item>
+        <item>Banana</item>
+        <item>Orange</item>
+    </string-array>
+
+    <string-array name="other">
+        <item>Cup</item>
+        <item>Basket</item>
+        <item>Keyboard</item>
+        <item>Computer</item>
+        <item>TV</item>
+    </string-array>
+
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
     <!-- TODO: Remove or change this placeholder text -->

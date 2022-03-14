@@ -12,11 +12,6 @@ import android.widget.ArrayAdapter;
 
 import com.example.yrocery.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fruits#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Fruits extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,7 +19,7 @@ public class Fruits extends ListFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 inflater.getContext(),
                 android.R.layout.simple_list_item_1,
-                getResources().getStringArray(R.array.pasta));
+                getResources().getStringArray(R.array.fruits));
         setListAdapter(adapter);
         return super.onCreateView(inflater, container, savedInstanceState);
     }

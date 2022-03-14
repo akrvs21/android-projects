@@ -31,6 +31,8 @@ dependencies {
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:29.2.0')
+    // Declare the dependency for the Firebase Authentication library
+    implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'info.hoang8f:fbutton:1.0.5'
     implementation 'androidx.appcompat:appcompat:1.4.1'

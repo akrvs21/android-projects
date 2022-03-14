@@ -33,7 +33,6 @@ public class Menu extends AppCompatActivity {
     DrawerLayout drawerLayout;
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
-
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             //Code to run when the item gets clicked
