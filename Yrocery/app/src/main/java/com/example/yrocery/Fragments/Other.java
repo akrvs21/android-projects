@@ -18,7 +18,8 @@ public class Other extends ListFragment {
                              Bundle savedInstanceState) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 inflater.getContext(),
-                android.R.layout.simple_list_item_1,
+                R.layout.custom_row,
+                R.id.productName,
                 getResources().getStringArray(R.array.other));
         setListAdapter(adapter);
         return super.onCreateView(inflater, container, savedInstanceState);

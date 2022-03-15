@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 
 import com.example.yrocery.Fragments.Cart;
 import com.example.yrocery.Fragments.Fruits;
@@ -31,6 +32,8 @@ public class Menu extends AppCompatActivity {
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
     DrawerLayout drawerLayout;
+//    private NumberPicker productAmount;
+
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -45,6 +48,10 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         drawerList = findViewById(R.id.drawer);
         titles = getResources().getStringArray(R.array.titles);
+
+//        productAmount = findViewById(R.id.productAmount);
+//        productAmount.setMinValue(1);
+//        productAmount.setMaxValue(100);
 
         drawerList.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_activated_1, titles));
