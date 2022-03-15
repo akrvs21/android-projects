@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +24,16 @@ import com.example.yrocery.Fragments.Fruits;
 import com.example.yrocery.Fragments.Order;
 import com.example.yrocery.Fragments.Other;
 import com.example.yrocery.Fragments.Vegetables;
+import com.example.yrocery.POJO.Product;
+import com.example.yrocery.POJO.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Menu extends AppCompatActivity {
@@ -32,8 +42,6 @@ public class Menu extends AppCompatActivity {
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
     DrawerLayout drawerLayout;
-//    private NumberPicker productAmount;
-
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -46,12 +54,9 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
         drawerList = findViewById(R.id.drawer);
         titles = getResources().getStringArray(R.array.titles);
-
-//        productAmount = findViewById(R.id.productAmount);
-//        productAmount.setMinValue(1);
-//        productAmount.setMaxValue(100);
 
         drawerList.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_activated_1, titles));
