@@ -13,7 +13,6 @@ import com.example.yrocery.POJO.Product;
 import com.example.yrocery.R;
 import com.example.yrocery.Utils.ImageLoadTask;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<Product> {
     Context context;
@@ -43,7 +42,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Product> {
             convertView = mInflater.inflate(R.layout.custom_row, null);
             holder = new ViewHolder();
             holder.productName = convertView.findViewById(R.id.productName);
-            holder.productPrice = convertView.findViewById(R.id.productPrice);
+            holder.productPrice = convertView.findViewById(R.id.productPrice2);
             holder.productImg = convertView.findViewById(R.id.productImg);
             convertView.setTag(holder);
         } else
