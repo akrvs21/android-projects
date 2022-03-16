@@ -7,10 +7,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +44,7 @@ public class Menu extends AppCompatActivity {
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
     DrawerLayout drawerLayout;
+    String userPhone;
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -55,6 +58,10 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        Intent intent = getIntent();
+        userPhone = intent.getStringExtra("userPhone");
+
+        Log.d("userPhone", userPhone);
         drawerList = findViewById(R.id.drawer);
         titles = getResources().getStringArray(R.array.titles);
 
@@ -151,6 +158,9 @@ public class Menu extends AppCompatActivity {
 
         // Close drawer
         drawerLayout.closeDrawer(drawerList);
+    }
+    public String getUserPhone() {
+        return userPhone;
     }
 
     @Override

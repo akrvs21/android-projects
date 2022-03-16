@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 
 import com.example.yrocery.Adapters.CustomArrayAdapter;
+import com.example.yrocery.Menu;
 import com.example.yrocery.POJO.Product;
 import com.example.yrocery.R;
 import com.google.firebase.database.DataSnapshot;
@@ -31,16 +32,23 @@ import java.util.ArrayList;
 public class Fruits extends ListFragment {
     private ArrayList<Product> productList = new ArrayList<>();
     private CustomArrayAdapter mAdapter;
+    String userPhone;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Getting user phone number from parent activity
+        Menu menuActivity = (Menu) getActivity();
+        userPhone = menuActivity.getUserPhone();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("INFruits", userPhone);
+        // DB initialization
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://yrocery-default-rtdb.asia-southeast1.firebasedatabase.app");
         DatabaseReference table_products = database.getReference("Fruits");
+        // Listener to products table, reads and listens to/the DB
         table_products.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -48,7 +56,7 @@ public class Fruits extends ListFragment {
                     productList.add(snapshot.child(i + "").getValue(Product.class));
                 }
                 Log.d("product", "onDataChange: " + productList);
-                mAdapter = new CustomArrayAdapter(getActivity(), R.layout.custom_row, productList);
+                mAdapter = new CustomArrayAdapter(getActivity(), R.layout.custom_row, productList, userPhone);
                 setListAdapter(mAdapter);
             }
 

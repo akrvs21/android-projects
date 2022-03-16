@@ -48,15 +48,17 @@ public class Login extends AppCompatActivity {
                 table_user.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String userPhone = editPhone.getText().toString();
                         // Check if user not exist in database
-                        if(snapshot.child(editPhone.getText().toString()).exists()) {
+                        if(snapshot.child(userPhone).exists()) {
                             progressDialog.dismiss();
                             // Get User information
-                            User user = snapshot.child(editPhone.getText().toString()).getValue(User.class);
+                            User user = snapshot.child(userPhone).getValue(User.class);
                             assert user != null;
                             if(user.getPassword().equals(editPassword.getText().toString())) {
                                 Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
                                 Intent loginIntent = new Intent(Login.this, Menu.class);
+                                loginIntent.putExtra("userPhone", userPhone);
                                 startActivity(loginIntent);
                             } else {
                                 Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
