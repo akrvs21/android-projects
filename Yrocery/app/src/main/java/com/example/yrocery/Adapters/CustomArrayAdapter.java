@@ -17,9 +17,12 @@ import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<Product> {
     Context context;
-    public CustomArrayAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Product> objects) {
+    public CustomArrayAdapter(@NonNull Context context, int resource,  ArrayList<Product> objects) {
         super(context, resource, objects);
         Log.d("Adapter", "CustomArrayAdapter");
+        Log.d("Adapter", String.valueOf(context));
+        Log.d("Adapter", String.valueOf(resource));
+        Log.d("Adapter", String.valueOf(objects));
         this.context = context;
     }
 
@@ -49,7 +52,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Product> {
         holder.productName.setText(rowItem.getName());
         holder.productPrice.setText(rowItem.getPrice());
 //        holder.productImg.setImageURI(rowItem.getImgUrl());
-        new ImageLoadTask(rowItem.getImgUrl(), holder.productImg).execute();
+        new ImageLoadTask(rowItem.getImage(), holder.productImg).execute();
         //holder.imageView.setImageResource(rowItem.getImageId());
 
         return convertView;

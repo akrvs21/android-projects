@@ -1,5 +1,6 @@
 package com.example.yrocery.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.CallSuper;
@@ -33,9 +34,15 @@ public class Fruits extends ListFragment {
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://yrocery-default-rtdb.asia-southeast1.firebasedatabase.app");
         DatabaseReference table_products = database.getReference("Fruits");
-
+        Log.d("product", "onAttach: ");
         table_products.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -43,6 +50,8 @@ public class Fruits extends ListFragment {
                     productList.add(snapshot.child(i + "").getValue(Product.class));
                 }
                 Log.d("product", "onDataChange: " + productList);
+                mAdapter = new CustomArrayAdapter(getActivity(), R.layout.custom_row, productList);
+                setListAdapter(mAdapter);
             }
 
             @Override
@@ -55,10 +64,10 @@ public class Fruits extends ListFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        mAdapter = new CustomArrayAdapter(getActivity(), R.id.menu_content, productList);
-        setListAdapter(mAdapter);
-
+        Log.d("product", "outter: " + productList);
+//        mAdapter = new CustomArrayAdapter(getActivity(), R.layout.custom_row, productList);
+//        setListAdapter(mAdapter);
+        Log.d("Fruits", "onCreateView: ");
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 //                inflater.getContext(),
 //                R.layout.custom_row,

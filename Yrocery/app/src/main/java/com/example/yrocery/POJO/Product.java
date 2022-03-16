@@ -8,10 +8,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String price, String imgUrl) {
+    public Product(String name, String price, String image) {
         this.name = name;
         this.price = price;
-        this.image = imgUrl;
+        this.image = image;
     }
 
     public String getName() {
@@ -30,11 +30,11 @@ public class Product {
         this.price = price;
     }
 
-    public String getImgUrl() {
+    public String getImage() {
         return image;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.image = imgUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
