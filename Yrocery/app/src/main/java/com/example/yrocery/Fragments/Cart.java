@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yrocery.Adapters.CartCustomArrayAdapter;
-import com.example.yrocery.Adapters.CustomArrayAdapter;
 import com.example.yrocery.Menu;
 import com.example.yrocery.POJO.Product;
 import com.example.yrocery.R;
@@ -27,6 +25,7 @@ import java.util.ArrayList;
 
 public class Cart extends ListFragment {
     private ArrayList<Product> productList = new ArrayList<>();
+    private ArrayList<String> cartProductkey = new ArrayList<String>();
     private CartCustomArrayAdapter mAdapter;
     String userPhone;
 
@@ -49,12 +48,11 @@ public class Cart extends ListFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {
+                    cartProductkey.add(ds.getKey());
                     productList.add(snapshot.child(ds.getKey()).getValue(Product.class));
                 }
-                for(int i = 0; i < productList.toArray().length; i++) {
-                    Log.d("forloop", "onDataChange: " + productList.get(i).getName());
-                }
-                mAdapter = new CartCustomArrayAdapter(getActivity(), R.layout.cart_custom_row, productList, userPhone);
+
+                mAdapter = new CartCustomArrayAdapter(getActivity(), R.layout.cart_custom_row, productList, userPhone, cartProductkey);
                 setListAdapter(mAdapter);
             }
 

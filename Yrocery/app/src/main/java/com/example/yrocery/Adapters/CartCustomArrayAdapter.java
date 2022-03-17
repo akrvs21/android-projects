@@ -28,9 +28,9 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
     Context context;
     String userPhone;
     private DatabaseReference mDatabaseReference;
-    static int i = 1;
+    private ArrayList<String> cartProductkey = new ArrayList<String>();
 
-    public CartCustomArrayAdapter(@NonNull Context context, int resource, ArrayList<Product> objects, String userPhone) {
+    public CartCustomArrayAdapter(@NonNull Context context, int resource, ArrayList<Product> objects, String userPhone, ArrayList<String> cartProductkey) {
         super(context, resource, objects);
         Log.d("Adapter", "CustomArrayAdapter");
         Log.d("Adapter", String.valueOf(context));
@@ -38,6 +38,7 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
         Log.d("Adapter", String.valueOf(objects));
         this.userPhone = userPhone;
         this.context = context;
+        this.cartProductkey = cartProductkey;
     }
 
     /*private view holder class*/
@@ -87,6 +88,14 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
         new ImageLoadTask(rowItem.getImage(), holder.cartProductImg).execute();
         ViewHolder finalHolder = holder;
 
+        holder.cartDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Log.d("phonum", userPhone);
+                Log.d("phonum", cartProductkey.get(position));
+                mDatabaseReference.child(userPhone).child("cartItems").child(cartProductkey.get(position)).removeValue();
+            }
+        });
         return convertView;
     }
 }
