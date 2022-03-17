@@ -87,7 +87,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Product> {
                 productAmount[0] = finalHolder.productAmount.getText().toString();
                 CardItem cardItem = new CardItem(name, price, image, productAmount[0]);
                 mDatabaseReference.child(userPhone).child("cartItems").child(uniqueID).setValue(cardItem);
-                ++i;
 
                 Log.d("productId", "id: " + view.getId());
                 Log.d("cardItem", "name: " + cardItem.getName());

@@ -1,5 +1,6 @@
 package com.example.yrocery.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.yrocery.Fragments.Cart;
 import com.example.yrocery.POJO.CardItem;
 import com.example.yrocery.POJO.Product;
 import com.example.yrocery.R;
@@ -50,6 +52,7 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
         EditText cartProductAmount;
     }
 
+    @SuppressLint("InflateParams")
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         String name;
@@ -91,9 +94,9 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
         holder.cartDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d("phonum", userPhone);
                 Log.d("phonum", cartProductkey.get(position));
-                mDatabaseReference.child(userPhone).child("cartItems").child(cartProductkey.get(position)).removeValue();
+//                Cart.deleted = true;
+                mDatabaseReference.child(userPhone).child("cartItems").child(cartProductkey.remove(position)).removeValue();
             }
         });
         return convertView;

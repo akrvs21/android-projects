@@ -22,11 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 public class Login extends AppCompatActivity {
     EditText editPhone, editPassword;
     Button btnSignIn;
+    Boolean logedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        logedIn = false;
 
         editPhone = findViewById(R.id.editPhone);
         editPassword = findViewById(R.id.editPassword);
@@ -50,22 +52,25 @@ public class Login extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String userPhone = editPhone.getText().toString();
                         // Check if user not exist in database
-                        if(snapshot.child(userPhone).exists()) {
-                            progressDialog.dismiss();
-                            // Get User information
-                            User user = snapshot.child(userPhone).getValue(User.class);
-                            assert user != null;
-                            if(user.getPassword().equals(editPassword.getText().toString())) {
-                                Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
-                                Intent loginIntent = new Intent(Login.this, Menu.class);
-                                loginIntent.putExtra("userPhone", userPhone);
-                                startActivity(loginIntent);
+                        if(!logedIn) {
+                            if(snapshot.child(userPhone).exists()) {
+                                progressDialog.dismiss();
+                                // Get User information
+                                User user = snapshot.child(userPhone).getValue(User.class);
+                                assert user != null;
+                                if(user.getPassword().equals(editPassword.getText().toString())) {
+                                    Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
+                                    logedIn = true;
+                                    Intent loginIntent = new Intent(Login.this, Menu.class);
+                                    loginIntent.putExtra("userPhone", userPhone);
+                                    startActivity(loginIntent);
+                                } else {
+                                    Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "The user doesn't exist", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
                             }
-                        } else {
-                            Toast.makeText(Login.this, "The user doesn't exist", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
                         }
                     }
                     @Override
