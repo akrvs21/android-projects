@@ -1,4 +1,5 @@
 package com.example.yrocery.Adapters;
+
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 
 import com.example.yrocery.POJO.CardItem;
@@ -22,13 +24,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class CustomArrayAdapter extends ArrayAdapter<Product> {
+public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
     Context context;
     String userPhone;
     private DatabaseReference mDatabaseReference;
     static int i = 1;
 
-    public CustomArrayAdapter(@NonNull Context context, int resource,  ArrayList<Product> objects, String userPhone) {
+    public CartCustomArrayAdapter(@NonNull Context context, int resource, ArrayList<Product> objects, String userPhone) {
         super(context, resource, objects);
         Log.d("Adapter", "CustomArrayAdapter");
         Log.d("Adapter", String.valueOf(context));
@@ -40,11 +42,11 @@ public class CustomArrayAdapter extends ArrayAdapter<Product> {
 
     /*private view holder class*/
     private class ViewHolder {
-        TextView productName;
-        ImageView productImg;
-        TextView productPrice;
-        Button addToCartBtn;
-        EditText productAmount;
+        TextView cartProductName;
+        ImageView cartProductImg;
+        TextView cartProductPrice;
+        Button cartDeleteBtn;
+        EditText cartProductAmount;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -61,40 +63,29 @@ public class CustomArrayAdapter extends ArrayAdapter<Product> {
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.custom_row, null);
+            Log.d("getview", "if called");
+            convertView = mInflater.inflate(R.layout.cart_custom_row, null);
             holder = new ViewHolder();
-            holder.productName = convertView.findViewById(R.id.productName);
-            holder.productPrice = convertView.findViewById(R.id.productPrice2);
-            holder.productImg = convertView.findViewById(R.id.productImg);
-            holder.addToCartBtn = convertView.findViewById(R.id.cardBtn);
-            holder.productAmount = convertView.findViewById(R.id.productAmount);
+            holder.cartProductName = convertView.findViewById(R.id.cartProductName);
+            holder.cartProductPrice = convertView.findViewById(R.id.cartProductPrice2);
+            holder.cartProductImg = convertView.findViewById(R.id.cartProductImg);
+            holder.cartDeleteBtn = convertView.findViewById(R.id.cartDeleteBtn);
+            holder.cartProductAmount = convertView.findViewById(R.id.cartProductAmount);
             convertView.setTag(holder);
         } else
+            Log.d("getview", "else called");
             holder = (ViewHolder) convertView.getTag();
 
         name = rowItem.getName();
         price = rowItem.getPrice();
         image = rowItem.getImage();
-
-        holder.productName.setText(rowItem.getName());
-        holder.productPrice.setText(rowItem.getPrice());
-        new ImageLoadTask(rowItem.getImage(), holder.productImg).execute();
+        productAmount[0] = rowItem.getAmount();
+        Log.d("testing", name + " " + price + " " + productAmount[0] + " " + image);
+        holder.cartProductName.setText(rowItem.getName());
+        holder.cartProductPrice.setText(rowItem.getPrice());
+        holder.cartProductAmount.setText(rowItem.getAmount());
+        new ImageLoadTask(rowItem.getImage(), holder.cartProductImg).execute();
         ViewHolder finalHolder = holder;
-        holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String uniqueID = UUID.randomUUID().toString();
-                productAmount[0] = finalHolder.productAmount.getText().toString();
-                CardItem cardItem = new CardItem(name, price, image, productAmount[0]);
-                mDatabaseReference.child(userPhone).child("cartItems").child(uniqueID).setValue(cardItem);
-                ++i;
-
-                Log.d("productId", "id: " + view.getId());
-                Log.d("cardItem", "name: " + cardItem.getName());
-                Log.d("cardItem", "price: " + cardItem.getPrice());
-                Log.d("cardItem", "amount: " + cardItem.getAmount());
-            }
-        });
 
         return convertView;
     }

@@ -1,50 +1,50 @@
 package com.example.yrocery.POJO;
 
 public class CardItem {
-    String productName;
-    String productPrice;
-    String productImg;
-    String productAmount;
+    String name;
+    String price;
+    String image;
+    String amount;
 
     public CardItem() {
     }
 
-    public CardItem(String productName, String productPrice, String productImg, String productAmount) {
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productImg = productImg;
-        this.productAmount = productAmount;
+    public CardItem(String name, String price, String image, String amount) {
+        this.name = name;
+        this.price = price;
+        this.image = image;
+        this.amount = amount;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getProductPrice() {
-        return productPrice;
+    public String getPrice() {
+        return price;
     }
 
-    public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getProductImg() {
-        return productImg;
+    public String getImage() {
+        return image;
     }
 
-    public void setProductImg(String productImg) {
-        this.productImg = productImg;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getProductAmount() {
-        return productAmount;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setProductAmount(String productAmount) {
-        this.productAmount = productAmount;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

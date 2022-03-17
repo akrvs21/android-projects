@@ -4,6 +4,7 @@ public class Product {
     String name;
     String price;
     String image;
+    String amount;
 
     public Product() {
     }
@@ -16,6 +17,14 @@ public class Product {
 
     public String getName() {
         return name;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public void setName(String name) {
