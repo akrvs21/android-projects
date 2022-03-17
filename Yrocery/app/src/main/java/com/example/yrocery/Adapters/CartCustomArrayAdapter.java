@@ -34,10 +34,6 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
 
     public CartCustomArrayAdapter(@NonNull Context context, int resource, ArrayList<Product> objects, String userPhone, ArrayList<String> cartProductkey) {
         super(context, resource, objects);
-        Log.d("Adapter", "CustomArrayAdapter");
-        Log.d("Adapter", String.valueOf(context));
-        Log.d("Adapter", String.valueOf(resource));
-        Log.d("Adapter", String.valueOf(objects));
         this.userPhone = userPhone;
         this.context = context;
         this.cartProductkey = cartProductkey;
@@ -63,11 +59,9 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
         mDatabaseReference = FirebaseDatabase.getInstance("https://yrocery-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("User");
 
         Product rowItem = getItem(position);
-        Log.d("Adapter", "getView");
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            Log.d("getview", "if called");
             convertView = mInflater.inflate(R.layout.cart_custom_row, null);
             holder = new ViewHolder();
             holder.cartProductName = convertView.findViewById(R.id.cartProductName);
@@ -77,28 +71,27 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
             holder.cartProductAmount = convertView.findViewById(R.id.cartProductAmount);
             convertView.setTag(holder);
         } else
-            Log.d("getview", "else called");
             holder = (ViewHolder) convertView.getTag();
 
         name = rowItem.getName();
         price = rowItem.getPrice();
         image = rowItem.getImage();
         productAmount[0] = rowItem.getAmount();
-        Log.d("testing", name + " " + price + " " + productAmount[0] + " " + image);
-        holder.cartProductName.setText(rowItem.getName());
-        holder.cartProductPrice.setText(rowItem.getPrice());
-        holder.cartProductAmount.setText(rowItem.getAmount());
-        new ImageLoadTask(rowItem.getImage(), holder.cartProductImg).execute();
+
+        holder.cartProductName.setText(name);
+        holder.cartProductPrice.setText(price);
+        holder.cartProductAmount.setText(productAmount[0]);
+        new ImageLoadTask(image, holder.cartProductImg).execute();
         ViewHolder finalHolder = holder;
 
         holder.cartDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("phonum", cartProductkey.get(position));
-//                Cart.deleted = true;
                 mDatabaseReference.child(userPhone).child("cartItems").child(cartProductkey.remove(position)).removeValue();
             }
         });
         return convertView;
     }
+
+
 }

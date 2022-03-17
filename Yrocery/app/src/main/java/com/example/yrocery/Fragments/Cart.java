@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.yrocery.Adapters.CartCustomArrayAdapter;
 import com.example.yrocery.Menu;
@@ -27,7 +28,6 @@ public class Cart extends ListFragment {
     private ArrayList<Product> productList = new ArrayList<>();
     private ArrayList<String> cartProductkey = new ArrayList<String>();
     private CartCustomArrayAdapter mAdapter;
-    public static Boolean deleted;
     String userPhone;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +35,6 @@ public class Cart extends ListFragment {
         // Getting user phone number from parent activity
         Menu menuActivity = (Menu) getActivity();
         userPhone = menuActivity.getUserPhone();
-        deleted = false;
     }
 
     @Override
@@ -49,7 +48,6 @@ public class Cart extends ListFragment {
             table_cartItems.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if(!deleted) {
                         productList.clear();
                         for(DataSnapshot ds : snapshot.getChildren()) {
                         cartProductkey.add(ds.getKey());
@@ -60,9 +58,9 @@ public class Cart extends ListFragment {
                             public void run() {
                                 mAdapter = new CartCustomArrayAdapter(getActivity(), R.layout.cart_custom_row, productList, userPhone, cartProductkey);
                                 setListAdapter(mAdapter);
+
                             }
                         });
-//                    }
                 }
 
                 @Override
@@ -72,5 +70,13 @@ public class Cart extends ListFragment {
             });
         Log.d("Fruits", "onCreateView: ");
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        View myv = getLayoutInflater().inflate(R.layout.buy_items, null);
+        Button buyButton = myv.findViewById(R.id.buyBtn);
+        getListView().addFooterView(buyButton);
     }
 }
