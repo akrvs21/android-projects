@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/activity_checkout.xml" value="0.33" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/activity_login.xml" value="0.42916666666666664" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/activity_main.xml" value="0.4266666666666667" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/activity_menu.xml" value="0.25" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/activity_sing_up.xml" value="0.42916666666666664" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/buy_items.xml" value="0.3522873022659256" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/cart_custom_row.xml" value="0.33" />
+        <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/checkout_custom_row.xml" value="0.5" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/custom_row.xml" value="0.5" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/fragment_cart.xml" value="0.25" />
         <entry key="..\:/Study/android-projects/Yrocery/app/src/main/res/layout/fragment_fruits.xml" value="0.25" />

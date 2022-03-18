@@ -1,5 +1,7 @@
 package com.example.yrocery.Fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.yrocery.Adapters.CartCustomArrayAdapter;
+import com.example.yrocery.Checkout;
 import com.example.yrocery.Menu;
 import com.example.yrocery.POJO.Product;
 import com.example.yrocery.R;
@@ -78,5 +81,33 @@ public class Cart extends ListFragment {
         View myv = getLayoutInflater().inflate(R.layout.buy_items, null);
         Button buyButton = myv.findViewById(R.id.buyBtn);
         getListView().addFooterView(buyButton);
+
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent checkOutIntent = new Intent(getActivity(), Checkout.class);
+                checkOutIntent.putExtra("productList", productList);
+                startActivity(checkOutIntent);
+                ((Activity) getActivity()).overridePendingTransition(0, 0);
+            }
+        });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
