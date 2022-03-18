@@ -56,14 +56,15 @@ public class Cart extends ListFragment {
                         cartProductkey.add(ds.getKey());
                         productList.add(snapshot.child(ds.getKey()).getValue(Product.class));
                     }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mAdapter = new CartCustomArrayAdapter(getActivity(), R.layout.cart_custom_row, productList, userPhone, cartProductkey);
-                                setListAdapter(mAdapter);
-
-                            }
-                        });
+                    mAdapter = new CartCustomArrayAdapter(getActivity(), R.layout.cart_custom_row, productList, userPhone, cartProductkey);
+                    setListAdapter(mAdapter);
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//
+//
+//                            }
+//                        });
                 }
 
                 @Override
@@ -79,14 +80,15 @@ public class Cart extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         View myv = getLayoutInflater().inflate(R.layout.buy_items, null);
-        Button buyButton = myv.findViewById(R.id.buyBtn);
-        getListView().addFooterView(buyButton);
+        Button checkoutBtn = myv.findViewById(R.id.checkoutButton);
+        getListView().addFooterView(checkoutBtn);
 
-        buyButton.setOnClickListener(new View.OnClickListener() {
+        checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent checkOutIntent = new Intent(getActivity(), Checkout.class);
                 checkOutIntent.putExtra("productList", productList);
+                checkOutIntent.putExtra("userPhone", userPhone);
                 startActivity(checkOutIntent);
                 ((Activity) getActivity()).overridePendingTransition(0, 0);
             }
