@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class Checkout extends AppCompatActivity {
     private ArrayList<Product> productList = new ArrayList<>();
@@ -61,14 +63,18 @@ public class Checkout extends AppCompatActivity {
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String uniqueID = UUID.randomUUID().toString();
                 userName = userNameField.getText().toString();
                 userPhoneNumber = userPhoneNumberField.getText().toString();
                 userAddress = userAddressField.getText().toString();
 
-                mDatabaseReference.child(userPhone).child("contacts").child("name").setValue(userName);
-                mDatabaseReference.child(userPhone).child("contacts").child("phone").setValue(userPhoneNumber);
-                mDatabaseReference.child(userPhone).child("contacts").child("address").setValue(userAddress);
-                mDatabaseReference.child(userPhone).child("order").setValue(productList);
+                mDatabaseReference.child(userPhone).child("order").child(uniqueID).setValue(productList);
+                mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("name").setValue(userName);
+                mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("phone").setValue(userPhoneNumber);
+                mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("address").setValue(userAddress);
+                mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("totalPrice").setValue(totalPrice);
+
+                mDatabaseReference.child(userPhone).child("cartItems").removeValue();
             }
         });
     }
