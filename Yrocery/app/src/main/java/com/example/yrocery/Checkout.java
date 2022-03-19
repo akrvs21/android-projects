@@ -75,6 +75,9 @@ public class Checkout extends AppCompatActivity {
                 mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("totalPrice").setValue(totalPrice);
 
                 mDatabaseReference.child(userPhone).child("cartItems").removeValue();
+
+                Intent finishBuyIntent = new Intent(Checkout.this, BuyFinal.class);
+                startActivity(finishBuyIntent);
             }
         });
     }

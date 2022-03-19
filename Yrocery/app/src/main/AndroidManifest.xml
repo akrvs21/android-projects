@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Yrocery">
         <activity
+            android:name=".BuyFinal"
+            android:exported="false" />
+        <activity
             android:name=".Checkout"
             android:exported="false" />
         <activity

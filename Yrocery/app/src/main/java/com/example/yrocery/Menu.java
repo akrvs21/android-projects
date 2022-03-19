@@ -61,7 +61,7 @@ public class Menu extends AppCompatActivity {
         Intent intent = getIntent();
         userPhone = intent.getStringExtra("userPhone");
 
-        Log.d("userPhone", userPhone);
+//        Log.d("userPhone", userPhone);
         drawerList = findViewById(R.id.drawer);
         titles = getResources().getStringArray(R.array.titles);
 
