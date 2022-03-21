@@ -46,26 +46,31 @@ public class SignUp extends AppCompatActivity {
                 String phone = editPhone.getText().toString();
                 String password = editPassword.getText().toString();
 
-                table_user.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.child(phone).exists()) {
-                            progressDialog.dismiss();
-//                            Toast.makeText(SignUp.this, "This user already exist", Toast.LENGTH_SHORT).show();
-                        } else {
-                            progressDialog.dismiss();
-                            User user = new User(name, password);
-                            table_user.child(phone).setValue(user);
-                            Toast.makeText(SignUp.this, "Sign up successfully", Toast.LENGTH_SHORT).show();
-                            finish();
+                if(name.isEmpty() || phone.isEmpty() || password.isEmpty()) {
+                    progressDialog.dismiss();
+                    Toast.makeText(SignUp.this, "Please input all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    table_user.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.child(phone).exists()) {
+                                progressDialog.dismiss();
+                            Toast.makeText(SignUp.this, "This phone number already registered", Toast.LENGTH_SHORT).show();
+                            } else {
+                                progressDialog.dismiss();
+                                User user = new User(name, password);
+                                table_user.child(phone).setValue(user);
+                                Toast.makeText(SignUp.this, "Sign up successfully", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
     }

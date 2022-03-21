@@ -51,25 +51,35 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String userPhone = editPhone.getText().toString();
-                        // Check if user not exist in database
-                        if(!logedIn) {
-                            if(snapshot.child(userPhone).exists()) {
-                                progressDialog.dismiss();
-                                // Get User information
-                                User user = snapshot.child(userPhone).getValue(User.class);
-                                assert user != null;
-                                if(user.getPassword().equals(editPassword.getText().toString())) {
-                                    Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
-                                    logedIn = true;
-                                    Intent loginIntent = new Intent(Login.this, Menu.class);
-                                    loginIntent.putExtra("userPhone", userPhone);
-                                    startActivity(loginIntent);
+                        String userPassword = editPassword.getText().toString();
+
+                        if(userPhone.isEmpty() || userPassword.isEmpty()) {
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "Input all fields", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Check if user not exist in database
+                            if(!logedIn) {
+                                if(snapshot.child(userPhone).exists()) {
+                                    progressDialog.dismiss();
+                                    // Get User information
+                                    User user = snapshot.child(userPhone).getValue(User.class);
+                                    assert user != null;
+                                    if(user.getPassword().equals(userPassword)) {
+                                        Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
+                                        logedIn = true;
+                                        Intent loginIntent = new Intent(Login.this, Menu.class);
+                                        loginIntent.putExtra("userPhone", userPhone);
+                                        startActivity(loginIntent);
+                                    } else {
+                                        Toast.makeText(Login.this, "Wrong Password", Toast.LENGTH_SHORT).show();
+                                        editPassword.setText("");
+                                    }
                                 } else {
-                                    Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                    editPassword.setText("");
+                                    editPhone.setText("");
+                                    Toast.makeText(Login.this, "The user doesn't exist, Sign Up first !", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                 }
-                            } else {
-                                Toast.makeText(Login.this, "The user doesn't exist", Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
                             }
                         }
                     }

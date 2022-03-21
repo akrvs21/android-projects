@@ -29,13 +29,13 @@
 
         <info.hoang8f.widget.FButton
             android:id="@+id/btnSignUp"
-            android:text="@string/sign_up"
-            android:textColor="@color/white"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_up"
+            android:textColor="@color/white"
             app:shadowColor="@color/black"
-            app:shadowHeight="5dp"/>
+            app:shadowHeight="5dp" />
 
         <info.hoang8f.widget.FButton
             android:id="@+id/btnSignIn"

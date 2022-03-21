@@ -44,7 +44,7 @@ public class Fruits extends ListFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("INFruits", userPhone);
+//        Log.d("INFruits", userPhone);
         // DB initialization
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://yrocery-default-rtdb.asia-southeast1.firebasedatabase.app");
         DatabaseReference table_products = database.getReference("Fruits");
