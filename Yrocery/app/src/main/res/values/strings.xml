@@ -1,44 +1,49 @@
 <resources>
-    <string name="app_name">Yrocery</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="sign_in">Sign In</string>
+    <string name="app_name">Грядка</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="sign_in">Вход</string>
 
     <string-array name="titles">
-        <item>Vegetables</item>
-        <item>Fruits</item>
-        <item>Other</item>
-        <item>Cart</item>
-        <item>Order</item>
-        <item>Sign out</item>
+        <item>Овощи</item>
+        <item>Фрукты</item>
+        <item>Разное</item>
+        <item>Корзина</item>
+        <item>Заказы</item>
+        <item>Выйти</item>
     </string-array>
 
-    <string-array name="vegetables">
-        <item>Potato</item>
-        <item>Tomato</item>
-        <item>Carrot</item>
-        <item>Corn</item>
-        <item>Pumpkin</item>
-    </string-array>
+<!--    <string-array name="vegetables">-->
+<!--        <item>Картофель</item>-->
+<!--        <item>Помидор</item>-->
+<!--        <item>Морковь</item>-->
+<!--        <item>Кукуруза</item>-->
+<!--        <item>Тыква</item>-->
+<!--    </string-array>-->
 
-    <string-array name="fruits">
-        <item>Apple</item>
-        <item>Pineapple</item>
-        <item>Watermelon</item>
-        <item>Banana</item>
-        <item>Orange</item>
-    </string-array>
+<!--    <string-array name="fruits">-->
+<!--        <item>Яблоко</item>-->
+<!--        <item>Ананас</item>-->
+<!--        <item>Арбуз</item>-->
+<!--        <item>Банан</item>-->
+<!--        <item>Апельсин</item>-->
+<!--    </string-array>-->
 
-    <string-array name="other">
-        <item>Cup</item>
-        <item>Basket</item>
-        <item>Keyboard</item>
-        <item>Computer</item>
-        <item>TV</item>
-    </string-array>
+<!--    <string-array name="other">-->
+<!--        <item>Kружка</item>-->
+<!--        <item>Корзина</item>-->
+<!--        <item>Клавиатура</item>-->
+<!--        <item>Компьютер</item>-->
+<!--        <item>Телевизор</item>-->
+<!--    </string-array>-->
 
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_your_name">Введите ваше имя</string>
+    <string name="enter_your_phone">Введите свой телефон</string>
+    <string name="enter_your_password">Введите свой пароль</string>
+    <string name="add_to_cart">Добавить в корзину</string>
+    <string name="delete">Удалить</string>
 
 </resources>

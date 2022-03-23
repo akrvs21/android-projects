@@ -59,7 +59,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ProgressDialog progressDialog = new ProgressDialog(Login.this);
-                progressDialog.setMessage("Please wait....");
+                progressDialog.setMessage("Пожалуйста, подождите....");
                 progressDialog.show();
 
                 table_user.addValueEventListener(new ValueEventListener() {
@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity {
 
                         if(userPhone.isEmpty() || userPassword.isEmpty()) {
                             progressDialog.dismiss();
-                            Toast.makeText(Login.this, "Input all fields", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show();
                         } else {
                             // Check if user not exist in database
                             if(!logedIn) {
@@ -80,7 +80,7 @@ public class Login extends AppCompatActivity {
                                     User user = snapshot.child(userPhone).getValue(User.class);
                                     assert user != null;
                                     if(user.getPassword().equals(userPassword)) {
-                                        Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Login.this, "Успешная авторизация", Toast.LENGTH_SHORT).show();
                                         logedIn = true;
 
                                         SharedPreferences.Editor editor = userCredentialsPrefs.edit();
@@ -92,13 +92,13 @@ public class Login extends AppCompatActivity {
                                         loginIntent.putExtra("userPhone", userPhone);
                                         startActivity(loginIntent);
                                     } else {
-                                        Toast.makeText(Login.this, "Wrong Password", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Login.this, "Неправильный пароль", Toast.LENGTH_SHORT).show();
                                         editPassword.setText("");
                                     }
                                 } else {
                                     editPassword.setText("");
                                     editPhone.setText("");
-                                    Toast.makeText(Login.this, "The user doesn't exist, Sign Up first !", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Пользователь не существует, сначала зарегистрируйтесь!", Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
                                 }
                             }

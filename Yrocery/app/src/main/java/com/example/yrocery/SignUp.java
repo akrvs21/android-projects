@@ -39,7 +39,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ProgressDialog progressDialog = new ProgressDialog(SignUp.this);
-                progressDialog.setMessage("Please wait");
+                progressDialog.setMessage("Пожалуйста, подождите...");
                 progressDialog.show();
 
                 String name = editName.getText().toString();
@@ -48,19 +48,19 @@ public class SignUp extends AppCompatActivity {
 
                 if(name.isEmpty() || phone.isEmpty() || password.isEmpty()) {
                     progressDialog.dismiss();
-                    Toast.makeText(SignUp.this, "Please input all fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUp.this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show();
                 } else {
                     table_user.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.child(phone).exists()) {
                                 progressDialog.dismiss();
-                            Toast.makeText(SignUp.this, "This phone number already registered", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp.this, "Этот номер телефона уже зарегистрирован", Toast.LENGTH_SHORT).show();
                             } else {
                                 progressDialog.dismiss();
                                 User user = new User(name, password);
                                 table_user.child(phone).setValue(user);
-                                Toast.makeText(SignUp.this, "Sign up successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUp.this, "Успешно зарегистрирован", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         }
