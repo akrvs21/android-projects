@@ -58,13 +58,6 @@ public class Cart extends ListFragment {
                     }
                     mAdapter = new CartCustomArrayAdapter(getActivity(), R.layout.cart_custom_row, productList, userPhone, cartProductkey);
                     setListAdapter(mAdapter);
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//
-//
-//                            }
-//                        });
                 }
 
                 @Override

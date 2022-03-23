@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,16 +24,30 @@ public class Login extends AppCompatActivity {
     EditText editPhone, editPassword;
     Button btnSignIn;
     Boolean logedIn;
+    SharedPreferences userCredentialsPrefs;
+    String userPhone;
+    String userPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         logedIn = false;
-
         editPhone = findViewById(R.id.editPhone);
         editPassword = findViewById(R.id.editPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
+        userCredentialsPrefs = getSharedPreferences("userCredentials",0);
+
+        userPhone = userCredentialsPrefs.getString("userPhone", "empty");
+        userPassword = userCredentialsPrefs.getString("userPassword", "empty");
+
+        if(!userPhone.equals("empty")) {
+            editPhone.setText(userPhone);
+        }
+        if(!userPassword.equals("empty")) {
+            editPassword.setText(userPassword);
+        }
+
 
         // Init Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://yrocery-default-rtdb.asia-southeast1.firebasedatabase.app");
@@ -50,8 +65,8 @@ public class Login extends AppCompatActivity {
                 table_user.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String userPhone = editPhone.getText().toString();
-                        String userPassword = editPassword.getText().toString();
+                        userPhone = editPhone.getText().toString();
+                        userPassword = editPassword.getText().toString();
 
                         if(userPhone.isEmpty() || userPassword.isEmpty()) {
                             progressDialog.dismiss();
@@ -67,6 +82,12 @@ public class Login extends AppCompatActivity {
                                     if(user.getPassword().equals(userPassword)) {
                                         Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
                                         logedIn = true;
+
+                                        SharedPreferences.Editor editor = userCredentialsPrefs.edit();
+                                        editor.putString("userPhone", userPhone);
+                                        editor.putString("userPassword", userPassword);
+                                        editor.apply();
+
                                         Intent loginIntent = new Intent(Login.this, Menu.class);
                                         loginIntent.putExtra("userPhone", userPhone);
                                         startActivity(loginIntent);

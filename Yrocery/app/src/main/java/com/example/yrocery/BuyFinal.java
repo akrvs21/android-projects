@@ -21,7 +21,7 @@ public class BuyFinal extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent backIntent = new Intent(BuyFinal.this, Menu.class);
-                backIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                backIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(backIntent);
             }
         });

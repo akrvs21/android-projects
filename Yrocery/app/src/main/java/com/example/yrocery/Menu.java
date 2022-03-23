@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -45,6 +46,7 @@ public class Menu extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     DrawerLayout drawerLayout;
     String userPhone;
+    SharedPreferences userCredentialsPrefs;
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -58,8 +60,9 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        userCredentialsPrefs = getSharedPreferences("userCredentials",0);
         Intent intent = getIntent();
-        userPhone = intent.getStringExtra("userPhone");
+        userPhone = intent.getStringExtra("userPhone") != null ? intent.getStringExtra("userPhone") : userCredentialsPrefs.getString("userPhone", "empty");
 
 //        Log.d("userPhone", userPhone);
         drawerList = findViewById(R.id.drawer);
