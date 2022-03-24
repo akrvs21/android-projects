@@ -94,6 +94,4 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
         });
         return convertView;
     }
-
-
 }

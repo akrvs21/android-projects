@@ -45,5 +45,6 @@
     <string name="enter_your_password">Введите свой пароль</string>
     <string name="add_to_cart">В корзину</string>
     <string name="delete">Удалить</string>
+    <string name="make_order">Сделать заказ</string>
 
 </resources>
