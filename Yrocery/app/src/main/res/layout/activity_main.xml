@@ -10,13 +10,14 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="70dp"
-        android:layout_centerInParent="true"
+        app:cardCornerRadius="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
         app:cardPreventCornerOverlap="false">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:src="@drawable/logo" />
     </androidx.cardview.widget.CardView>
 

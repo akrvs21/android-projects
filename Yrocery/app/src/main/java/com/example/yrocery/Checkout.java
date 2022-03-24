@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yrocery.Adapters.CustomBaseAdapter;
 import com.example.yrocery.POJO.Product;
@@ -68,16 +69,20 @@ public class Checkout extends AppCompatActivity {
                 userPhoneNumber = userPhoneNumberField.getText().toString();
                 userAddress = userAddressField.getText().toString();
 
-                mDatabaseReference.child(userPhone).child("order").child(uniqueID).setValue(productList);
-                mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("name").setValue(userName);
-                mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("phone").setValue(userPhoneNumber);
-                mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("address").setValue(userAddress);
-                mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("totalPrice").setValue(totalPrice);
+                if(userName.isEmpty() || userPhoneNumber.isEmpty() || userAddress.isEmpty()) {
+                    Toast.makeText(Checkout.this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show();
+                } else {
+                    mDatabaseReference.child(userPhone).child("order").child(uniqueID).setValue(productList);
+                    mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("name").setValue(userName);
+                    mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("phone").setValue(userPhoneNumber);
+                    mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("contacts").child("address").setValue(userAddress);
+                    mDatabaseReference.child(userPhone).child("order").child(uniqueID).child("totalPrice").setValue(totalPrice);
 
-                mDatabaseReference.child(userPhone).child("cartItems").removeValue();
+                    mDatabaseReference.child(userPhone).child("cartItems").removeValue();
 
-                Intent finishBuyIntent = new Intent(Checkout.this, BuyFinal.class);
-                startActivity(finishBuyIntent);
+                    Intent finishBuyIntent = new Intent(Checkout.this, BuyFinal.class);
+                    startActivity(finishBuyIntent);
+                }
             }
         });
     }

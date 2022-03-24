@@ -68,4 +68,8 @@ public class Fruits extends ListFragment {
         Log.d("Fruits", "onCreateView: ");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        getListView().setDivider(null);
+    }
 }

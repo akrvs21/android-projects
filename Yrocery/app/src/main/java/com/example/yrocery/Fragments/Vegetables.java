@@ -49,6 +49,7 @@ public class Vegetables extends ListFragment {
                 }
                 Log.d("product", "onDataChange: " + productList);
                 mAdapter = new CustomArrayAdapter(getActivity(), R.layout.custom_row, productList, userPhone);
+                getListView().setDivider(null);
                 setListAdapter(mAdapter);
             }
 
@@ -58,5 +59,9 @@ public class Vegetables extends ListFragment {
             }
         });
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        getListView().setDivider(null);
     }
 }

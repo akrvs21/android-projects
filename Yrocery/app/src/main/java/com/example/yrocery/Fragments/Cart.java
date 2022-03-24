@@ -75,6 +75,7 @@ public class Cart extends ListFragment {
         View myv = getLayoutInflater().inflate(R.layout.buy_items, null);
         Button checkoutBtn = myv.findViewById(R.id.checkoutButton);
         getListView().addFooterView(checkoutBtn);
+        getListView().setDivider(null);
 
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override

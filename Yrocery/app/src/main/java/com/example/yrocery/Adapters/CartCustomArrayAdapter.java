@@ -23,6 +23,8 @@ import com.example.yrocery.Utils.ImageLoadTask;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -45,7 +47,7 @@ public class CartCustomArrayAdapter extends ArrayAdapter<Product> {
         ImageView cartProductImg;
         TextView cartProductPrice;
         Button cartDeleteBtn;
-        EditText cartProductAmount;
+        TextView cartProductAmount;
     }
 
     @SuppressLint("InflateParams")

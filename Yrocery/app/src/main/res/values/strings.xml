@@ -43,7 +43,7 @@
     <string name="enter_your_name">Введите ваше имя</string>
     <string name="enter_your_phone">Введите свой телефон</string>
     <string name="enter_your_password">Введите свой пароль</string>
-    <string name="add_to_cart">Добавить в корзину</string>
+    <string name="add_to_cart">В корзину</string>
     <string name="delete">Удалить</string>
 
 </resources>
