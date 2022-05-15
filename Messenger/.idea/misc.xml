@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/drawable/round_btn.xml" value="0.21" />
         <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/drawable/rounded_edit_text.xml" value="0.256" />
-        <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/layout/activity_login.xml" value="0.146875" />
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/layout/activity_latest_messages.xml" value="0.25416666666666665" />
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/layout/activity_new_message.xml" value="0.25416666666666665" />
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/layout/user_row_new_message.xml" value="0.176" />
+        <entry key="..\:/LEARNING/AndroidDev/android-projects/Messenger/app/src/main/res/menu/nav_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

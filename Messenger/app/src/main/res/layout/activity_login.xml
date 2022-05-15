@@ -4,6 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#66e0ff"
     tools:context=".LoginActivity">
+
+    <EditText
+        android:id="@+id/userLoginPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="43dp"
+        android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userLoginEmail" />
+
+    <EditText
+        android:id="@+id/userLoginEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="238dp"
+        android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="email"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
+        android:background="#ff3385"
+        android:text="Log in"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/userLoginPassword"
+        app:layout_constraintStart_toStartOf="@+id/userLoginPassword"
+        app:layout_constraintTop_toBottomOf="@+id/userLoginPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
